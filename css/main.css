@@ -1,0 +1,24 @@
+body section#example .container .row .col-9 p {
+  color: yellow;
+  font-weight: 500; }
+
+/*# sourceMappingURL=main.css.map */
+.card-body{
+  outline: none!important;
+}
+
+.sliding{
+  position: fixed;
+  bottom: 0;
+  left: 0;
+}
+.speechThat{
+  padding: 10px;
+  box-sizing: border-box;
+  outline: none!important;
+  border-radius: 50%;
+  }
+  .speechThat p{
+    margin: 0;
+    padding: 0;
+  }
