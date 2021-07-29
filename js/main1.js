@@ -20,7 +20,7 @@ function drawPage(){
 	let content2=''
 	for (let i=0;i<mixedAnswer.length;i++){
 		content1+=
-		"<button type='button' class='btn btn-light m-1' onclick='chooseFromMixed("+i+")'>"+mixedAnswer[i]+"</button>"
+		"<button type='button' class='btn btn-light m-1' onclick='chooseFromMixed("+i+")' id='btn-mix"+i+"'>"+mixedAnswer[i]+"</button>"
 	}
 	for (let i=0;i<checkList.length;i++){
 		content2+=
@@ -46,25 +46,34 @@ function result(){
 }
 
 function chooseFromMixed(index){
+	//action works when mixed words are pressed. And go to choosen list
 	checkList.push(mixedAnswer[index]);
 	mixedAnswer.splice(index,1)
 	drawPage()
 }
 
 function returnToMixed(index){
+	//to undone choosen word to mixed words list again
 	mixedAnswer.push(checkList[index])
 	checkList.splice(index,1)
 	drawPage()
 }
 
 function avoidCheckError(){
-	//to avoid undefined returning buttons to mixed words
+	//to avoid undefined returning buttons to mixed words or to choosen words
+
+	//and this one is for choosen words
 	for (let i=0;i<checkList.length;i++){
 		document.getElementById('btn-off'+i).onclick=function() {return}
 	}
+	//and this one is for mixed words
+	for (let i=0;i<mixedAnswer.length;i++){
+		document.getElementById('btn-mix'+i).onclick=function() {return}
+	}
 }
 
-function checkResult(){
+function checkResult(){ 
+	//this only return true or false according to result of test
 	avoidCheckError()
 	let checkingList=checkList
 	checkList=[] 
@@ -80,6 +89,7 @@ else {return false}
 
 }
 function check(){
+	//here we take true or false from checkResult. And color effects and also changing onlick of 'result' button
 	if (checkResult()) {
         document.getElementById('sliding').style.backgroundColor='#5cb85c';
         document.getElementById('checkButton').innerHTML='congratulation';
@@ -104,12 +114,11 @@ function check(){
 
 
 // overall txt to speech part here:
-//there is undone work with default pronunciation . We have to convert it to english according to question langauage
 function speechIt(){
-	// document.getElementById('question').innerHTML=question;
 	let sms=document.getElementById('question').innerText
 	let rgt = new SpeechSynthesisUtterance(sms);
 	window.speechSynthesis.speak(rgt);
+	//there is undone work with default pronunciation . We have to convert it to english according to question langauage
 }
 
 
