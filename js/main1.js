@@ -24,7 +24,7 @@ function drawPage(){
 	}
 	for (let i=0;i<checkList.length;i++){
 		content2+=
-		"<button type='button' class='btn btn-light m-1' onclick='returnToMixed("+i+")'>"+checkList[i]+"</button>"
+		"<button type='button' class='btn btn-light m-1' onclick='returnToMixed("+i+")' id='btn-off"+i+"'>"+checkList[i]+"</button>"
 	}
 	document.getElementById('mixed-words').innerHTML=content1
 	document.getElementById('answer').innerHTML=content2
@@ -57,15 +57,27 @@ function returnToMixed(index){
 	drawPage()
 }
 
+function avoidCheckError(){
+	//to avoid undefined returning buttons to mixed words
+	for (let i=0;i<checkList.length;i++){
+		document.getElementById('btn-off'+i).onclick=function() {return}
+	}
+}
+
 function checkResult(){
+	avoidCheckError()
 	let checkingList=checkList
-	checkList=[]
-	for (let i =0 ; i<answer.length; i++) {
-        if (answer[i]!=checkingList[i]) {
+	checkList=[] 
+    if (answer.length==checkingList.length){
+    for (let i =0 ;i<answer.length;i++){
+        if(!(answer.includes(checkingList[i]))){
             return false
         }
     }
-    return true
+    return true 
+}
+else {return false}
+
 }
 function check(){
 	if (checkResult()) {
@@ -89,11 +101,17 @@ function check(){
 
 
 
-// overall txt to speech part here:
 
+
+// overall txt to speech part here:
+//there is undone work with default pronunciation . We have to convert it to english according to question langauage
 function speechIt(){
 	// document.getElementById('question').innerHTML=question;
 	let sms=document.getElementById('question').innerText
 	let rgt = new SpeechSynthesisUtterance(sms);
 	window.speechSynthesis.speak(rgt);
 }
+
+
+
+
